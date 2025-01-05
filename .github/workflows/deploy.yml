@@ -8,6 +8,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    environment: chronos
 
     steps:
     - name: Checkout code
@@ -16,8 +17,6 @@ jobs:
     - name: Set up SSH
       uses: webfactory/ssh-agent@v0.5.3
       with:
-        host: ${{vars.VM_IP}}
-        username: ${{vars.VM_USER}}
         ssh-private-key: ${{ secrets.DIGITALOCEAN_SSH_KEY }}
 
     - name: Deploy to Droplet
@@ -26,7 +25,7 @@ jobs:
         TOKEN: ${{ secrets.TOKEN }}
         ACTIVITY_URL: ${{ vars.ACTIVITY_URL }}
       run: |
-        ssh user@${{vars.VM_IP}} << 'EOF'
+        ssh ${{vars.VM_USER}}@${{vars.VM_IP}} << 'EOF'
         export CLIENT_ID=$CLIENT_ID
         export TOKEN=$TOKEN
         export ACTIVITY_URL=$ACTIVITY_URL
