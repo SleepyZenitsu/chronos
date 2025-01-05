@@ -17,7 +17,7 @@ jobs:
     - name: Set up SSH
       uses: webfactory/ssh-agent@v0.5.3
       with:
-        ssh-private-key: ${{ secrets.DIGITALOCEAN_SSH_KEY }}
+        ssh-private-key: ${{ secrets.DIGITALOCEAN_SSH_KEY || '' }}
 
     - name: Deploy to Droplet
       env:
@@ -25,7 +25,7 @@ jobs:
         TOKEN: ${{ secrets.TOKEN }}
         ACTIVITY_URL: ${{ vars.ACTIVITY_URL }}
       run: |
-        ssh ${{vars.VM_USER}}@${{vars.VM_IP}} << 'EOF'
+        ssh -tt ${{vars.VM_USER}}@${{vars.VM_IP}} << 'EOF'
         export CLIENT_ID=$CLIENT_ID
         export TOKEN=$TOKEN
         export ACTIVITY_URL=$ACTIVITY_URL
