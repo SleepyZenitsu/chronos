@@ -16,6 +16,8 @@ jobs:
     - name: Set up SSH
       uses: webfactory/ssh-agent@v0.5.3
       with:
+        host: ${{vars.VM_IP}}
+        username: ${{vars.VM_USER}}
         ssh-private-key: ${{ secrets.DIGITALOCEAN_SSH_KEY }}
 
     - name: Deploy to Droplet
