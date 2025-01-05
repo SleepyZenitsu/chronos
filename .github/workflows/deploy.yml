@@ -20,13 +20,13 @@ jobs:
 
     - name: Deploy to Droplet
       env:
-        CLIENT_ID: ${{ secrets.CLIENT_ID }}
+        CLIENT_ID: ${{ vars.CLIENT_ID }}
         TOKEN: ${{ secrets.TOKEN }}
-        ACTIVITY_URL: ${{ secrets.ACTIVITY_URL }}
+        ACTIVITY_URL: ${{ vars.ACTIVITY_URL }}
       run: |
-        ssh user@your-droplet-ip << 'EOF'
+        ssh user@${{vars.VM_IP}} << 'EOF'
         export CLIENT_ID=$CLIENT_ID
         export TOKEN=$TOKEN
         export ACTIVITY_URL=$ACTIVITY_URL
-        bash /var/www/app1/deploy.sh
+        bash ${{vars.DEPLOY_SCRIPT}}
         EOF
