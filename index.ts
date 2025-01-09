@@ -24,7 +24,12 @@ client.on(Events.InteractionCreate, async interaction => {
       return interaction.editReply('You do not have permission to run this command');
     }
 
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({
+      headless: true,
+      args: [
+        "--no-sandbox",
+      ],
+    });
     const page = await browser.newPage();
     await page.setViewport({width: 1080, height: 1024});
     await page.goto(process.env.ACTIVITY_URL ?? '');
